@@ -11,14 +11,18 @@ const bot = ref<User>({
   name: "Botman",
 });
 const users = computed(() => [me.value, bot.value]);
+
 const messages = ref<Message[]>([]);
+
 const usersTyping = ref<User[]>([]);
+
 const messagesForAPI = computed(() =>
   messages.value.map((m) => ({
     role: m.userId,
     content: m.text,
   }))
 );
+
 async function handleNewMessage(message: Message) {
   messages.value.push(message);
   usersTyping.value.push(bot.value);
@@ -28,7 +32,9 @@ async function handleNewMessage(message: Message) {
       messages: messagesForAPI.value,
     },
   });
+
   if (!res.choices[0].message?.content) return;
+
   const msg = {
     id: res.id,
     userId: bot.value.id,

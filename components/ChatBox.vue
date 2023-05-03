@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from "nanoid";
 import { Message, User } from "~~/types";
+import ChatBubble from './ChatBubble.vue';
 const props = withDefaults(
   defineProps<{
     messages: Message[];
@@ -16,6 +17,10 @@ const props = withDefaults(
 defineEmits<{
   (e: "newMessage", payload: Message): void;
 }>();
+const open = ref(false);
+function getUser(id: string) {
+  return props.users.find((user) => user.id === id);
+}
 
 const open = ref(false);
 

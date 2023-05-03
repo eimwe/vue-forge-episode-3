@@ -13,6 +13,7 @@ const props = withDefaults(
     usersTyping: () => [],
   }
 );
+
 defineEmits<{
   (e: "newMessage", payload: Message): void;
 }>();
@@ -20,6 +21,13 @@ const open = ref(false);
 function getUser(id: string) {
   return props.users.find((user) => user.id === id);
 }
+
+const open = ref(false);
+
+function getUser(id: string) {
+  return props.users.find((user) => user.id === id);
+}
+
 // focus input whenever chatbox is opened
 const input = ref();
 watch(open, () => {
@@ -28,6 +36,7 @@ watch(open, () => {
     (input.value as HTMLInputElement).focus();
   });
 });
+
 // keep messages anchored to bottom
 const messageBox = ref();
 watch(

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Message, User } from "~~/types";
-
 const me = ref<User>({
   id: "user",
   avatar: "/avatar.jpg",
@@ -11,7 +10,6 @@ const bot = ref<User>({
   avatar: "/bot.jpg",
   name: "Botman",
 });
-
 const users = computed(() => [me.value, bot.value]);
 
 const messages = ref<Message[]>([]);

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { nanoid } from "nanoid";
 import { Message, User } from "~~/types";
+import ChatBubble from './ChatBubble.vue';
 const props = withDefaults(
   defineProps<{
     messages: Message[];

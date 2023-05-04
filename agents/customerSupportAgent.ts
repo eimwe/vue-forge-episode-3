@@ -1,22 +1,7 @@
-import { Configuration, OpenAIApi } from "openai";
-import * as agents from "@/agents";
+import createAgent from ".";
 
-export default defineEventHandler(async (event) => {
-  const body = await readBody(event);
-
-  const { OPENAI_API_KEY } = useRuntimeConfig();
-
-  const configuration = new Configuration({
-    apiKey: OPENAI_API_KEY,
-  });
-  const openai = new OpenAIApi(configuration);
-
-  if (!Object.keys(agents).includes(`${body.agent}Agent`)) {
-    throw new Error(`${body.agent} Agent does not exist`);
-  }
-
-  const { data } = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
+export const customerSupportAgent = createAgent((context) => {
+  return {
     messages: [
       /**
        * Train bot to only respond to app specific questions
@@ -80,11 +65,8 @@ export default defineEventHandler(async (event) => {
         content:
           "{insert post text here}. \n [Share on Twitter](https://twitter.com/intent/tweet?text={insert post text here})",
       },
-      ...body.messages,
+      ...context.messages,
     ],
-    temperature: body.temperature || 1,
-    // @ts-expect-error checking above if agent exists
-    ...agents[`${body.agent}Agent`](body),
-  });
-  return completion.data;
+    temperature: 0,
+  };
 });

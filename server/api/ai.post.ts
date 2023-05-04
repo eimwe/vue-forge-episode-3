@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     throw new Error(`${body.agent} Agent does not exist`);
   }
 
-  const { data } = await openai.createChatCompletion({
+  const completion = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
       /**
